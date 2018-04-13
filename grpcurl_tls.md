@@ -52,5 +52,5 @@ protoc --proto_path=. \
     helloworld/helloworld.proto
 ```
 
+grpcurl -d '{"name":"ngrpc"}' -protoset helloworld.protoset localhost:80 helloworld.Greeter/SayHello
 
-grpcurl -protoset helloworld.protoset localhost:80 helloworld.Greeter/SayHello
