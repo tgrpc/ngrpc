@@ -27,6 +27,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
 )
 
@@ -40,7 +41,14 @@ type server struct{}
 // SayHello implements helloworld.GreeterServer
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	log.Printf("req:%+v\n", in)
+	md := GetInMetadata(ctx)
+	log.Printf("req metadate: %+v\n", md)
 	return &pb.HelloReply{Message: "Hello " + in.Name}, nil
+}
+
+func GetInMetadata(ctx context.Context) metadata.MD {
+	md, _ := metadata.FromIncomingContext(ctx)
+	return md
 }
 
 func main() {
