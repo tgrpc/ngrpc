@@ -39,6 +39,7 @@ type server struct{}
 
 // SayHello implements helloworld.GreeterServer
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+	log.Printf("req:%+v\n", in)
 	return &pb.HelloReply{Message: "Hello " + in.Name}, nil
 }
 
@@ -47,10 +48,12 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
+	log.Println("...")
 	s := grpc.NewServer()
 	pb.RegisterGreeterServer(s, &server{})
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
+	log.Println(port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

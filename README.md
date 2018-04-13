@@ -18,10 +18,6 @@ http {
         listen 80 http2;
  
         access_log logs/access.log main;
- 
-        events {
-          worker_connections  1024;  ## Default: 1024
-        }
 
         location / {
             # Replace localhost:50051 with the address and port of your gRPC server
