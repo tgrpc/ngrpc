@@ -47,10 +47,10 @@ Error invoking method "helloworld.Greeter/SayHello": failed to query for service
 
 ```
 protoc --proto_path=. \
-    --descriptor_set_out=helloworld.protoset \
+    --descriptor_set_out=.helloworld.Greeter.pbin \
     --include_imports \
     helloworld/helloworld.proto
 ```
 
-grpcurl -d '{"name":"ngrpc"}' -protoset helloworld.protoset localhost:80 helloworld.Greeter/SayHello
+grpcurl -d '{"name":"ngrpc"}' -protoset .helloworld.Greeter.pbin localhost:80 helloworld.Greeter/SayHello
 
