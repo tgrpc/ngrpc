@@ -1,10 +1,10 @@
 
-1 . 使用tmux 暴露了14157端口，同时提供 http grpc接口。
+1 . 使用 cmux 暴露了50051端口，同时提供 http grpc接口。
 
-grpcurl localhost:14157 list nadesico.Prime
+grpcurl localhost:50051 helloworld.Greeter/SayHello
 
 ```
-Failed to dial target host "localhost:14157": tls: oversized record received with length 20527
+Failed to dial target host "localhost:50051": tls: oversized record received with length 20527
 ```
 
 走了http协议
@@ -12,7 +12,7 @@ Failed to dial target host "localhost:14157": tls: oversized record received wit
 
 2 . 使用 nginx 代理grpc
 
-grpcurl localhost:80 list nadesico.Prime
+grpcurl localhost:80 list helloworld.Greeter/SayHello
 
 ```
 Failed to dial target host "localhost:80": tls: first record does not look like a TLS handshake
