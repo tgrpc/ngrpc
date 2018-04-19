@@ -23,7 +23,9 @@ package main
 import (
 	"log"
 	"net"
+	"time"
 
+	"github.com/tgrpc/ngrpc/helloworld"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	pb "google.golang.org/grpc/examples/helloworld/helloworld"
@@ -46,6 +48,65 @@ func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloRe
 	return &pb.HelloReply{Message: "Hello " + in.Name}, nil
 }
 
+func (s *server) List(ctx context.Context, in *helloworld.ListReq) (*helloworld.ListResp, error) {
+	return &helloworld.ListResp{
+		Langs: []*helloworld.Lang{
+			&helloworld.Lang{
+				Name:     "Golang",
+				Birthday: time.Date(2006, 1, 2, 15, 4, 5, 0, time.Local).Unix(),
+				Versions: []*helloworld.Version{
+					&helloworld.Version{
+						Id:      1,
+						Version: "v0.0.1",
+						Desc:    "go version 0.0.1",
+					},
+					&helloworld.Version{
+						Id:      190,
+						Version: "v1.9.0",
+						Desc:    "go version 1.9.0",
+					},
+				},
+			},
+			&helloworld.Lang{
+				Name:     "Java",
+				Birthday: time.Date(1992, 1, 2, 15, 4, 5, 0, time.Local).Unix(),
+				Versions: []*helloworld.Version{
+					&helloworld.Version{
+						Id:      700,
+						Version: "v7.0.0",
+						Desc:    "jdk7",
+					},
+					&helloworld.Version{
+						Id:      900,
+						Version: "v9.0.0",
+						Desc:    "jdk9",
+					},
+				},
+			},
+		},
+		TotalCount: 999,
+	}, nil
+}
+
+func (s *server) GetLang(ctx context.Context, in *helloworld.GetLangReq) (*helloworld.Lang, error) {
+	return &helloworld.Lang{
+		Name:     "Golang",
+		Birthday: time.Date(2006, 1, 2, 15, 4, 5, 0, time.Local).Unix(),
+		Versions: []*helloworld.Version{
+			&helloworld.Version{
+				Id:      1,
+				Version: "v0.0.1",
+				Desc:    "go version 0.0.1",
+			},
+			&helloworld.Version{
+				Id:      190,
+				Version: "v1.9.0",
+				Desc:    "go version 1.9.0",
+			},
+		},
+	}, nil
+}
+
 func GetInMetadata(ctx context.Context) metadata.MD {
 	md, _ := metadata.FromIncomingContext(ctx)
 	return md
@@ -58,7 +119,9 @@ func main() {
 	}
 	log.Println("...")
 	s := grpc.NewServer()
-	pb.RegisterGreeterServer(s, &server{})
+	svr := &server{}
+	pb.RegisterGreeterServer(s, svr)
+	helloworld.RegisterLangServiceServer(s, svr)
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
 	log.Println(port)
