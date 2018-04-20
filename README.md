@@ -1,10 +1,16 @@
 # ngrpc
 
-Nginx-gRpc
+Nginx-gRpc gRpc服务代理
 ============
 
 
- - 1 `nginx.conf`
+ - 1 `nginx.conf` 开启nginx grpc代理
+
+```
+sudo nginx -s stop
+sudo nginx -c $GOPATH/src/github.com/tgrpc/ngrpc/nginx.conf
+tail -f /usr/local/nginx/logs/access.log
+```
 
 [nginx-grpc-doc](https://www.nginx.com/blog/nginx-1-13-10-grpc/)
 
@@ -15,7 +21,7 @@ http {
                       '"$http_user_agent"';
 
     server {
-        listen 80 http2;
+        listen 2080 http2;
  
         access_log logs/access.log main;
 
@@ -25,6 +31,7 @@ http {
             grpc_pass grpc://localhost:50051;
         }
     }
+
 }
 
 events {
@@ -32,13 +39,13 @@ events {
 }
 ```
 
- - 2 `server.go`
+ - 2 开启服务 `go run server.go`
 
 ```
 lis, err := net.Listen("tcp", ":50051")
 ```
 
- - 3 `client.go`
+ - 3 测试服务 `go run client.go`
 
 ```
  conn, err := grpc.Dial("localhost:80", grpc.WithInsecure())
