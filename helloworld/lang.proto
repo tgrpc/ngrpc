@@ -22,6 +22,10 @@ message Version {
 	int32 id = 1;
 	string version = 2;
 	string desc = 3;
+	repeated int32 vi32s = 4;
+	repeated string vstrs = 5;
+	repeated int64 vi64s = 6;
+	repeated double vf64s = 7;
 }
 
 message ListResp {

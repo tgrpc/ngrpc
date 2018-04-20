@@ -42,6 +42,7 @@ type server struct{}
 
 // SayHello implements helloworld.GreeterServer
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+	log.Printf("context:%+v\n", ctx)
 	log.Printf("req:%+v\n", in)
 	md := GetInMetadata(ctx)
 	log.Printf("req metadate: %+v\n", md)
@@ -59,11 +60,19 @@ func (s *server) List(ctx context.Context, in *helloworld.ListReq) (*helloworld.
 						Id:      1,
 						Version: "v0.0.1",
 						Desc:    "go version 0.0.1",
+						Vi32S:   []int32{111, 222},
+						Vi64S:   []int64{111, 222},
+						Vf64S:   []float64{111.0, 222.0},
+						Vstrs:   []string{"str1", "str2"},
 					},
 					&helloworld.Version{
 						Id:      190,
 						Version: "v1.9.0",
 						Desc:    "go version 1.9.0",
+						Vi32S:   []int32{111, 222},
+						Vi64S:   []int64{111, 222},
+						Vf64S:   []float64{111.0, 222.0},
+						Vstrs:   []string{"str1", "str2"},
 					},
 				},
 			},
@@ -75,11 +84,19 @@ func (s *server) List(ctx context.Context, in *helloworld.ListReq) (*helloworld.
 						Id:      700,
 						Version: "v7.0.0",
 						Desc:    "jdk7",
+						Vi32S:   []int32{111, 222},
+						Vi64S:   []int64{111, 222},
+						Vf64S:   []float64{111.0, 222.0},
+						Vstrs:   []string{"str1", "str2"},
 					},
 					&helloworld.Version{
 						Id:      900,
 						Version: "v9.0.0",
 						Desc:    "jdk9",
+						Vi32S:   []int32{111, 222},
+						Vi64S:   []int64{111, 222},
+						Vf64S:   []float64{111.0, 222.0},
+						Vstrs:   []string{"str1", "str2"},
 					},
 				},
 			},
@@ -97,11 +114,19 @@ func (s *server) GetLang(ctx context.Context, in *helloworld.GetLangReq) (*hello
 				Id:      1,
 				Version: "v0.0.1",
 				Desc:    "go version 0.0.1",
+				Vi32S:   []int32{111, 222},
+				Vi64S:   []int64{111, 222},
+				Vf64S:   []float64{111.0, 222.0},
+				Vstrs:   []string{"str1", "str2"},
 			},
 			&helloworld.Version{
 				Id:      190,
 				Version: "v1.9.0",
 				Desc:    "go version 1.9.0",
+				Vi32S:   []int32{111, 222},
+				Vi64S:   []int64{111, 222},
+				Vf64S:   []float64{111.0, 222.0},
+				Vstrs:   []string{"str1", "str2"},
 			},
 		},
 	}, nil
