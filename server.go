@@ -41,6 +41,14 @@ const (
 type server struct{}
 
 // SayHello implements helloworld.GreeterServer
+func (s *server) SayHello_Switch(ctx context.Context, in *helloworld.HelloRequest) (*helloworld.HelloReply, error) {
+	log.Printf("context:%+v\n", ctx)
+	log.Printf("req:%+v\n", in)
+	md := GetInMetadata(ctx)
+	log.Printf("req metadate: %+v\n", md)
+	return &helloworld.HelloReply{Message: "Hello " + in.Name}, nil
+}
+
 func (s *server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
 	log.Printf("context:%+v\n", ctx)
 	log.Printf("req:%+v\n", in)
@@ -146,6 +154,7 @@ func main() {
 	s := grpc.NewServer()
 	svr := &server{}
 	pb.RegisterGreeterServer(s, svr)
+	// helloworld.RegisterGreeterServer(s, svr)
 	helloworld.RegisterLangServiceServer(s, svr)
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
