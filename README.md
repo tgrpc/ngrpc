@@ -29,7 +29,13 @@ http {
  
         access_log logs/access.log main;
 
-        location / {
+        location /helloworld.Greeter {
+            # Replace localhost:50052 with the address and port of your gRPC server
+            # The 'grpc://' prefix is optional; unencrypted gRPC is the default    
+            grpc_pass grpc://localhost:50052;
+        }
+
+        location /helloworld.LangService {
             # Replace localhost:50051 with the address and port of your gRPC server
             # The 'grpc://' prefix is optional; unencrypted gRPC is the default    
             grpc_pass grpc://localhost:50051;
