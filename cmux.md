@@ -16,5 +16,6 @@ tg -c tgrpc.toml -C
 
 3. http调用
 ```
-curl http://localhost:50051/api/helloworld.Greeter/SayHello -H 'customerId:123' -H 'region:UK' --data-binary '{"name":"gRPC&webapi"}' --compressed
+curl http://localhost:50052/api/helloworld.Greeter/SayHello -H 'customerId:123' -H 'region:UK' --data-binary '{"name":"gRPC&webapi"}' --compressed
+curl http://localhost:2080/api/helloworld.Greeter/SayHello -H 'customerId:123' -H 'region:UK' --data-binary '{"name":"gRPC&webapi"}' --compressed
 ```

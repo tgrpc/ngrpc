@@ -1,8 +1,8 @@
 log_level = "debug"
 [service]
 [service.Greeter]
-address = "localhost:50051"
-# address = "localhost:2080"
+# address = "localhost:50051"
+address = "localhost:2080"
 reuse_desc = true
 proto_base_path = "$GOPATH/src/github.com/tgrpc/ngrpc"
 include_imports = "helloworld/helloworld.proto"

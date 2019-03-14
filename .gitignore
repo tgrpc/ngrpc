@@ -1,3 +1,4 @@
 *.protoset
 *.pbin
 init.sh
+*.log
