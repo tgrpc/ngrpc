@@ -1,0 +1,32 @@
+log_level = "debug"
+[service]
+[service.Greeter]
+address = "localhost:50051"
+# address = "localhost:2080"
+reuse_desc = true
+proto_base_path = "$GOPATH/src/github.com/tgrpc/ngrpc"
+include_imports = "helloworld/helloworld.proto"
+keepalive = "100s"
+data = '{"vals":["1","2","3"]}'
+
+[service.Language]
+address = "localhost:2080"
+reuse_desc = true
+proto_base_path = "$GOPATH/src/github.com/tgrpc/ngrpc"
+include_imports = "helloworld/lang.proto"
+keepalive = "100s"
+data = '["1", "2", "3"]'
+
+[[invokes]]
+service= "Greeter"
+method = "helloworld.Greeter/SayHello"
+headers = ["customerId:123", "region:UK"]
+data = '{"name":"gRPC&webapi"}'
+n = 1
+
+[[invokes]]
+service= "Language"
+method = "helloworld.LangService/List"
+headers = ["customerId:123", "region:UK"]
+data = '{}'
+# n = 1

@@ -1,7 +1,11 @@
 # ngrpc
 
-Nginx-gRpc gRpc服务代理
+Nginx-gRPC gRPC服务代理
 ============
+
+[gRPC和http使用相同端口](cmux.md)
+============
+
 
 
  - 1 `nginx.conf` 开启nginx grpc代理
