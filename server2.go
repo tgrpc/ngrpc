@@ -57,10 +57,8 @@ func main() {
 	}()
 
 	go func() {
-		_ = webapi.WebapiService
 		webapi.RegisteHelloService()
 		webapiS := &http.Server{
-			// Handler: &exampleHTTPHandler{},
 			Handler: webapi.WebapiService,
 		}
 		log.Println("webapi serve...")

@@ -42,6 +42,16 @@ http {
         }
     }
 
+    server {
+        listen       80;
+        server_name  localhost;
+        client_max_body_size 1024M;
+
+        location /api/helloworld.Greeter {
+            proxy_pass http://127.0.0.1:50052;
+            proxy_set_header Host $host:$server_port;
+        }
+    }
 }
 
 events {
@@ -58,5 +68,5 @@ lis, err := net.Listen("tcp", ":50051")
  - 3 测试服务 `go run client.go`
 
 ```
- conn, err := grpc.Dial("localhost:80", grpc.WithInsecure())
+ conn, err := grpc.Dial("localhost:2080", grpc.WithInsecure())
 ```
