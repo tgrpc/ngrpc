@@ -64,6 +64,12 @@ func GrpcSayHello(rw http.ResponseWriter, req *http.Request) {
 	fmt.Println("GrpcSayHello... call")
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
+
+	for k, v := range req.Header {
+		fmt.Printf("key:%s, val:%+v\n", k, v)
+		ctx = context.WithValue(ctx, k, v)
+	}
+
 	client := NewGreterClient()
 	resp, err := client.SayHello(ctx, pb)
 	// defer client.Close()
@@ -71,10 +77,10 @@ func GrpcSayHello(rw http.ResponseWriter, req *http.Request) {
 		fmt.Printf("err:%+v", err)
 		return
 	}
-	HttpResEncode(rw, resp)
+	HttpRespEncode(rw, resp)
 }
 
-func HttpResEncode(rw http.ResponseWriter, resp interface{}) {
+func HttpRespEncode(rw http.ResponseWriter, resp interface{}) {
 	rw.Header().Set("Content-Type", "application/json")
 	if msg, ok := resp.(proto.Message); ok {
 		(&jsonpb.Marshaler{EmitDefaults: true}).Marshal(rw, msg)
