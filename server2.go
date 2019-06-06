@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"strconv"
 
 	"github.com/tgrpc/ngrpc/helloworld"
 	"github.com/tgrpc/ngrpc/webapi"
@@ -27,6 +28,14 @@ func (s *server) SayHello(ctx context.Context, in *helloworld.HelloRequest) (*he
 	md := GetInMetadata(ctx)
 	log.Printf("req metadate: %+v\n", md)
 	return &helloworld.HelloReply{Message: "Hello " + in.Name}, nil
+}
+
+func (s *server) SayHelloV2(req *helloworld.HelloRequest, gs helloworld.Greeter_SayHelloV2Server) error {
+	log.Printf("req:%+v\n", req)
+	for i := 0; i < 100; i++ {
+		gs.Send(&helloworld.HelloReply{Message: "Hello " + strconv.Itoa(i)})
+	}
+	return nil
 }
 
 func GetInMetadata(ctx context.Context) metadata.MD {
