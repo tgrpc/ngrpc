@@ -6,13 +6,13 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/google/gops/agent"
+	"github.com/soheilhy/cmux"
 	"github.com/tgrpc/ngrpc/helloworld"
 	"github.com/tgrpc/ngrpc/webapi"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
-
-	"github.com/soheilhy/cmux"
 )
 
 const (
@@ -75,6 +75,10 @@ func main() {
 			panic(err)
 		}
 	}()
+
+	if err := agent.Listen(agent.Options{}); err != nil {
+		log.Fatal(err)
+	}
 
 	log.Println("cmux serve...")
 	if err := mux.Serve(); err != nil {

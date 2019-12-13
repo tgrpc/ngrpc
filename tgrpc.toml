@@ -7,8 +7,8 @@ address = "localhost:2080"
 proto_base_path = "$GOPATH/src/github.com/tgrpc/ngrpc"
 include_imports = "helloworld/greeter.proto"
 keepalive = "100s"
-# data = ['{"vals":["1","2","3"]}']
-datas = ['["1","2","3"]']
+datas = ["1","2","3"]
+# datas = ['["1","2","3"]']
 
 [service.Language]
 address = "localhost:2080"
@@ -21,7 +21,7 @@ keepalive = "100s"
 service= "Greeter"
 method = "helloworld.Greeter/SayHello"
 headers = ["customerId:123", "region:UK"]
-data = '{"name":"@$range"}'
+data = '{"name":"@$this"}'
 n = 1
 
 [[invokes]]
