@@ -1,0 +1,15 @@
+syntax = "proto3";
+package extension;
+
+option go_package = "github.com/tgrpc/ngrpc/extension;extension";
+
+import "google.protobuf/descriptor.proto";
+
+extend google.protobuf.ServiceOptions {
+    HttpRestOption rest = 20200229;
+}
+
+message HttpRestOption {
+	// 路由前缀
+	string preffix = 1;
+}

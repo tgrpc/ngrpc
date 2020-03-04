@@ -70,3 +70,12 @@ lis, err := net.Listen("tcp", ":50051")
 ```
  conn, err := grpc.Dial("localhost:2080", grpc.WithInsecure())
 ```
+
+## extend option
+
+```
+protoc -I . --gogo_out=plugins=grpc:extension extension/extension.proto
+protoc -I . --gogo_out=plugins=grpc:. helloworld/greeter.proto
+go run option/main.go
+```
+
